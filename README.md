@@ -8,7 +8,7 @@
 [![LangChain](https://img.shields.io/badge/RAG-LangChain-000000)](#)
 
 > **Disclaimer (Ownership & Use)**  
-> Owned by **Lalit Nayyar** (`lalitnayyar@gmail.com`) — Phone: **+971508320336 / +919595353336** — Company: **Symbiotic India**.  
+> Owned by **Lalit Nayyar** (`lalitnayyar@gmail.com`) .  
 > Provided for **internal evaluation, research, and benchmarking**. Redistribution or production deployment without owner consent is discouraged.  
 > You are responsible for compliance with applicable policies/laws and third‑party terms (OpenAI/HuggingFace/etc.).
 
