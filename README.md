@@ -1,128 +1,119 @@
 # RAG Evaluation Studio
 
-> Disclaimer (Ownership & Use):
-> This application is owned by **Lalit Nayyar** (`lalitnayyar@gmail.com`), Phone: **+971508320336 / +919595353336**, Company: **Symbiotic India**.
->
-> It is provided for **internal evaluation, research, and benchmarking** purposes. Re-distribution, external publication of results beyond your organization’s policy, or production deployment without owner consent is discouraged.
->
-> You are responsible for complying with applicable laws, network policies, and any third-party service terms used by this application.
+**A clean, professional RAG benchmark studio** — ingest, evaluate, compare, and iterate on Retrieval‑Augmented Generation pipelines with repeatable metrics and a polished dashboard.
 
-**RAG Evaluation Studio** is a professional, light-themed web app to benchmark Retrieval-Augmented Generation end-to-end.
+[![Python](https://img.shields.io/badge/Python-3.12%2B-3776AB?logo=python&logoColor=white)](#)
+[![Streamlit](https://img.shields.io/badge/UI-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](#)
+[![VectorDB](https://img.shields.io/badge/VectorDB-Chroma-2E7D32)](#)
+[![LangChain](https://img.shields.io/badge/RAG-LangChain-000000)](#)
 
-It’s designed to help you quickly compare retrieval quality and answer quality across runs using configurable ingestion + repeatable evaluation.
+> **Disclaimer (Ownership & Use)**  
+> Owned by **Lalit Nayyar** (`lalitnayyar@gmail.com`) — Phone: **+971508320336 / +919595353336** — Company: **Symbiotic India**.  
+> Provided for **internal evaluation, research, and benchmarking**. Redistribution or production deployment without owner consent is discouraged.  
+> You are responsible for compliance with applicable policies/laws and third‑party terms (OpenAI/HuggingFace/etc.).
 
-## Screen Preview
+---
 
-Below is a UI snapshot of the application (for layout reference):
+## Why this exists
+
+RAG systems fail silently: retrieval can look “fine” while answers hallucinate or omit critical constraints. This app gives you a **single, repeatable, end‑to‑end benchmark loop**:
+
+- **Ingest** → chunking + embeddings → Chroma vector DB
+- **Retrieve** → compute retrieval metrics per category
+- **Answer** → score answer quality signals
+- **Compare** → iterate quickly with consistent settings + logs
+
+---
+
+## Screen preview
 
 ![RAG Evaluation Studio UI](ScreenShot/XTUYYvKclx.png)
 
-## Key Features
+---
 
-1. **End-to-end benchmark workflow**
-   - Generate a synthetic knowledge base (`1000` records in JSON)
-   - Ingest into Chroma using LangChain + configurable chunking
-   - Run retrieval + answer evaluation with category breakdown
+## What you get (high‑signal features)
 
-2. **Provider-aware, resilient embeddings**
-   - Choose `Embedding Provider` = **OpenAI** or **HuggingFace**
-   - Embedding execution is isolated and resilient, with automatic fallback to keep the app running
+- **Professional evaluation dashboards**
+  - Retrieval: **MRR**, **nDCG**, **Coverage**
+  - Answer: **Accuracy**, **Completeness**, **Relevance** (all out of `/5`)
+  - Category-wise breakdowns (direct_fact, temporal, comparative, numerical, relationship, spanning, holistic)
 
-3. **Professional dashboards**
-   - Retrieval: `MRR`, `nDCG`, `Coverage` with category charts
-   - Answer: `Accuracy`, `Completeness`, `Relevance` with radar-style comparisons
+- **Configurable ingestion & retrieval**
+  - Chunk size / overlap
+  - Retrieval top‑K
+  - Collection naming and storage paths
 
-4. **Ingestion progress & operational controls**
-   - Live ingestion progress (split → chunk → embed → batch index)
-   - `Force New DB Run` to start fresh anytime
-   - DB lock handling with auto-fix and `Reset Session`
+- **Provider‑aware embeddings**
+  - Choose **OpenAI** or **HuggingFace**
+  - Resilient execution with fallbacks (keeps app usable under strict corporate TLS / runtime constraints)
 
-5. **Built-in logging**
-   - In-app live logs and persisted log file: `applog_YYYYMMDD_HHMMSS.log`
-   - Select verbosity from sidebar (`DEBUG`/`INFO`/`WARNING`/`ERROR`)
+- **Operational controls**
+  - Live ingestion progress meter
+  - **Force New DB Run** (fresh run directory on demand)
+  - DB lock auto-fix + **Reset Session**
 
-## Functionality Overview
+- **Built-in logging**
+  - Live log panel
+  - File output: `applog_YYYYMMDD_HHMMSS.log`
+  - Select log level (`DEBUG`/`INFO`/`WARNING`/`ERROR`)
 
-### 1) Ingestion Pipeline
-- Creates `knowledge-base/sample_knowledge.json` (exactly `1000` records)
-- Splits documents into chunks using a configurable `Chunk Size` and `Chunk Overlap`
-- Creates/updates a Chroma vector DB at `DB_NAME` with:
-  - `COLLECTION_NAME`
-  - embeddings from the selected provider
-- Batch indexing updates the progress meter continuously
+---
 
-### 2) Retrieval Evaluation
-For each evaluation query (sampled across benchmark categories), the app computes:
-- `MRR` (Mean Reciprocal Rank)
-- `nDCG` (Normalized Discounted Cumulative Gain)
-- `Coverage` (keyword coverage from the expected keywords)
+## Quick start (Windows / UV)
 
-### 3) Answer Evaluation
-The app then scores the generated answer against the expected benchmark signals:
-- `Accuracy` (token-based F1, scaled to `/5`)
-- `Completeness` (keyword presence, scaled to `/5`)
-- `Relevance` (semantic similarity proxy, scaled to `/5`)
+### 1) Install deps
 
-## User Guide
+```bash
+uv sync --system-certs
+```
 
-### Step A — Setup
-1. Install dependencies (recommended):
+### 2) Configure environment
 
-   ```bash
-   uv sync
-   ```
+```bash
+copy .env.example .env
+```
 
-2. Create `.env`:
+Set `OPENAI_API_KEY=` in `.env` if you will use OpenAI embeddings or LLM answering.
 
-   ```bash
-   copy .env.example .env
-   ```
+### 3) Run the app
 
-3. Set:
-- `OPENAI_API_KEY` (only) in `.env` if you choose OpenAI embeddings/LLM.
+```bash
+uv run --system-certs --no-sync python -m streamlit run app.py --server.port 8504
+```
 
-### Step B — Configure the GUI (Sidebar)
-Use the sidebar to select:
-- `MODEL`
-- `Embedding Provider` (**OpenAI** or **HuggingFace**)
-- `EMBEDDING_MODEL`
-- `COLLECTION_NAME`
-- `DB_NAME`
-- `KNOWLEDGE_BASE`
-- `Chunk Size`, `Chunk Overlap`
-- `Retrieval K`
-- `Benchmark Samples / Category`
-- `Use LLM for answer generation`
-- `Log Level`
+---
 
-### Step C — Ingest
-1. Click **Create/Load 1000 Sample JSON**
-2. Click **Ingest into Chroma Vector DB**
-   - Watch the progress meter update during indexing
-3. If you need a clean run:
-   - Click **Force New DB Run** (sets a fresh run directory)
+## User guide (end-to-end)
 
-### Step D — Evaluate
-1. Click **Run Evaluation**
-2. Review:
-   - **Retrieval Evaluation** tab: `MRR`, `nDCG`, `Coverage` + category charts
-   - **Answer Evaluation** tab: `Accuracy`, `Completeness`, `Relevance` + radar chart
+### Step 1 — Prepare sample data
+- Click **Create/Load 1000 Sample JSON**  
+  Creates `knowledge-base/sample_knowledge.json` (exactly **1000** records).
 
-### Step E — Logs & Troubleshooting
-- Open **Application Logs** to see live logs and confirm ingestion/evaluation steps
-- If HuggingFace fails due to SSL/corporate certificate policies:
-  - set `REQUESTS_CA_BUNDLE` or `SSL_CERT_FILE` in your environment
-- If Chroma DB fails with file-lock:
-  - use **Fix DB Lock and Retry Cleanup**
-  - if needed, click **Reset Session**
+### Step 2 — Ingest
+- Optionally click **Force New DB Run** (fresh DB folder)
+- Click **Ingest into Chroma Vector DB**
+- Watch ingestion progress (split → chunk → embed → batch index)
 
-## Tech Stack
+### Step 3 — Evaluate
+- Click **Run Evaluation**
+- Review:
+  - **Retrieval Evaluation** tab
+  - **Answer Evaluation** tab
 
-- Streamlit (web UI + animations/progress)
-- LangChain
-- Chroma vector database
-- OpenAI (`gpt-4.1-mini`, `text-embedding-3-small`, `text-embedding-3-large`)
-- HuggingFace embeddings (`sentence-transformers/all-MiniLM-L6-v2`)
+### Step 4 — Troubleshooting
+- **Corporate TLS / SSL issues (HuggingFace)**
+  - Set environment variable `REQUESTS_CA_BUNDLE` or `SSL_CERT_FILE` to your corporate CA bundle.
+  - Use `uv ... --system-certs`.
+- **Windows DB file lock**
+  - Use **Fix DB Lock and Retry Cleanup**
+  - If still stuck, click **Reset Session** or use **Force New DB Run**
 
-## Quick Start
-See the **User Guide** section above (Step A → Step E) for the complete step-by-step walkthrough.
+---
+
+## Tech stack
+
+- Streamlit (UI + progress + live logs)
+- LangChain + Chroma
+- Embeddings: OpenAI / HuggingFace (+ resilient fallbacks)
+- Plotly for charts
+
