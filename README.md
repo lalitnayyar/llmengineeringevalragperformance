@@ -7,19 +7,15 @@
 >
 > You are responsible for complying with applicable laws, network policies, and any third-party service terms used by this application.
 
-Professional, light-themed Python web application for benchmarking RAG systems with:
+**RAG Evaluation Studio** is a professional, light-themed web app to benchmark Retrieval-Augmented Generation end-to-end.
 
-- Configurable ingestion to Chroma vector DB
-- 1000-sample JSON knowledge base generation
-- Retrieval evaluation dashboard (MRR, nDCG, Coverage)
-- Answer evaluation dashboard (Accuracy, Completeness, Relevance)
-- Adjustable chunk size and retrieval `k`
+It’s designed to help you quickly compare retrieval quality and answer quality across runs using configurable ingestion + repeatable evaluation.
 
 ## Screen Preview
 
 Below is a UI snapshot of the application (for layout reference):
 
-![RAG Evaluation Studio UI](C:\Users\lalit\.cursor\projects\c-projects-EvaluatingRAGPerformance\assets\c__Users_lalit_AppData_Roaming_Cursor_User_workspaceStorage_40f99a87016f49cb6af2732536c6ff8d_images_image-ff285be5-aa62-40f4-b96e-8784754993a7.png)
+![RAG Evaluation Studio UI](ScreenShot/XTUYYvKclx.png)
 
 ## Key Features
 

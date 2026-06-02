@@ -2,3 +2,5 @@
 __pycache__/
 *.pyc
 vector_db/
+vector_db_*/
+applog_*.log
