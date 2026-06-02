@@ -1,0 +1,29 @@
+[project]
+name = "rag-evaluation-studio"
+version = "0.1.0"
+description = "Professional RAG evaluation dashboard with LangChain and Chroma."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "streamlit",
+    "langchain",
+    "langchain-community",
+    "langchain-openai",
+    "langchain-chroma",
+    "langchain-huggingface",
+    "chromadb",
+    "pandas",
+    "numpy",
+    "plotly",
+    "tqdm",
+    "scikit-learn",
+    "sentence-transformers",
+    "python-dotenv",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+package = false

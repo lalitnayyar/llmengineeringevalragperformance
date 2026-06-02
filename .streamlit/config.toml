@@ -1,0 +1,12 @@
+[server]
+# Disclaimer: Lalit Nayyar | lalitnayyar@gmail.com | +971508320336 / +919595353336 | Symbiotic India
+# Prevent Streamlit's watcher from traversing lazy transformer modules
+# that try to import optional vision stacks like torchvision.
+fileWatcherType = "none"
+# Keep local-only bind to avoid Windows OpenSSL uplink crash
+# seen with 0.0.0.0/external URL probing in some environments.
+address = "localhost"
+headless = true
+
+[browser]
+gatherUsageStats = false

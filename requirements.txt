@@ -1,0 +1,17 @@
+# Disclaimer: Lalit Nayyar | lalitnayyar@gmail.com | +971508320336 / +919595353336 | Symbiotic India
+streamlit
+langchain
+langchain-text-splitters
+langchain-community
+langchain-openai
+langchain-chroma
+langchain-huggingface
+chromadb
+pandas
+numpy
+plotly
+tqdm
+scikit-learn
+sentence-transformers
+python-dotenv
+truststore
