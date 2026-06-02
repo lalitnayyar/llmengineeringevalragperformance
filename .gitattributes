@@ -1,0 +1,8 @@
+# Normalize line endings across platforms
+* text=auto
+
+# Keep lock/config files stable
+uv.lock text eol=lf
+pyproject.toml text eol=lf
+requirements.txt text eol=lf
+README.md text eol=lf
